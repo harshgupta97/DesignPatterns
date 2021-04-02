@@ -1,24 +1,22 @@
 package com.company;
 
+import com.company.memento.Editor;
+import com.company.memento.History;
+
 public class Main {
-
     public static void main(String[] args) {
+        var editor = new Editor();
+        var history = new History();
 
-        User user = new User("Harsh");
-        System.out.println(user.name);
+        editor.setContent("a");
+        history.push(editor.createState());
+        editor.setContent("b");
+        history.push(editor.createState());
+        editor.setContent("c");
+        editor.restore(history.pop());
+        editor.restore(history.pop());
 
-        TaxCalculator calculator = getCalculator();
+        System.out.println(editor.getContent());
 
-        drawUIControl(new CheckBox());
-    }
-
-    // Coupling and interface
-    public static TaxCalculator getCalculator(){
-        return new TaxCalculator2019();
-    }
-
-    // Polymorphism and abstract
-    public static void drawUIControl(UIControl control){
-        control.draw();
     }
 }
